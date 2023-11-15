@@ -1,21 +1,35 @@
-import { useState } from "react";
-import { formInputList, productList } from "./data";
 import Modal from "./components/UI/Modal";
-import Button from "./components/UI/Button";
-import ProductsCard from "./components/ProductsCard";
 import Input from "./components/UI/Input";
+import Button from "./components/UI/Button";
+import { ChangeEvent, useState } from "react";
+import { formInputList, productList } from "./data";
+import ProductsCard from "./components/ProductsCard";
+import { IProduct } from "./interfaces";
 
 const App = () => {
   /* -------- STATE -------- */
   const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState<IProduct>({
+    title: "",
+    description: "",
+    imageURL: "",
+    price: "",
+    colors: [],
+    category: {
+      name: "",
+      imageURL: "",
+    }
+  });
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
+  const closeModal = () => setIsOpen(false);
+  const openModal = () => setIsOpen(true);
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setProduct({
+      ...product,
+      [name]: value,
+    });
+  };
 
   /* -------- HANDLER -------- */
   const renderProductList = productList.map((product) => (
@@ -29,7 +43,13 @@ const App = () => {
       >
         {input.label}
       </label>
-      <Input type={input.type} id={input.id} name={input.name} />
+      <Input
+        type={input.type}
+        id={input.id}
+        name={input.name}
+        value={product[]}
+        onChange={onChangeHandler}
+      />
     </div>
   ));
 

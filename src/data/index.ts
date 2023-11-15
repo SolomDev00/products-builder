@@ -116,7 +116,7 @@ export const formInputList: IFormInputs[] = [
   {
     id: "price",
     name: "price",
-    type: "number",
+    type: "text",
     label: "Product Price",
   },
 ];
