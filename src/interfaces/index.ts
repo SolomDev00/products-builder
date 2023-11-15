@@ -17,3 +17,9 @@ export interface IFormInputs {
   name: "title" | "description" | "imageURL" | "price";
   label: string;
 }
+
+export interface ICategory {
+  id: string;
+  name: string;
+  imageURL: string;
+}

@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { IFormInputs, IProduct } from "../interfaces";
+import { ICategory, IFormInputs, IProduct } from "../interfaces";
 
 export const productList: IProduct[] = [
   {
@@ -137,4 +137,42 @@ export const colors: string[] = [
   "#1F8A70",
   "#820000",
   "#FF0032",
+];
+
+export const categories: ICategory[] = [
+  {
+    id: uuid(),
+    name: "Volvo",
+    imageURL: "https://img.icons8.com/?size=48&id=AzLSbCDHPY0k&format=png",
+  },
+  {
+    id: uuid(),
+    name: "Mercedes",
+    imageURL: "https://img.icons8.com/?size=48&id=45135&format=png",
+  },
+  {
+    id: uuid(),
+    name: "BMW",
+    imageURL: "https://img.icons8.com/?size=48&id=63789&format=png",
+  },
+  {
+    id: uuid(),
+    name: "Volkswagen",
+    imageURL: "https://img.icons8.com/?size=48&id=58787&format=png",
+  },
+  {
+    id: uuid(),
+    name: "Honda",
+    imageURL: "https://img.icons8.com/?size=50&id=18820&format=png",
+  },
+  {
+    id: uuid(),
+    name: "Ford",
+    imageURL: "https://img.icons8.com/?size=48&id=57660&format=png",
+  },
+  {
+    id: uuid(),
+    name: "Kia",
+    imageURL: "https://img.icons8.com/?size=48&id=58805&format=png",
+  },
 ];

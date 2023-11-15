@@ -1,14 +1,15 @@
 import { v4 as uuid } from "uuid";
+import { IProduct } from "./interfaces";
 import Modal from "./components/schema/Modal";
 import Input from "./components/schema/Input";
+import Select from "./components/schema/Select";
 import Button from "./components/schema/Button";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { colors, formInputList, productList } from "./data";
-import ProductsCard from "./components/ProductsCard";
-import { IProduct } from "./interfaces";
 import { productValidation } from "./validation";
-import ErrorMessage from "./components/ErrorMessage";
 import CircleColor from "./components/CircleColor";
+import ErrorMessage from "./components/ErrorMessage";
+import ProductsCard from "./components/ProductsCard";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { categories, colors, formInputList, productList } from "./data";
 
 const App = () => {
   const defaultProductObj = {
@@ -26,6 +27,7 @@ const App = () => {
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
   const [products, setProducts] = useState<IProduct[]>(productList);
   const [tempColors, setTempColors] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState(categories[2]);
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState({
     title: "",
@@ -71,7 +73,12 @@ const App = () => {
     }
 
     setProducts((prev) => [
-      { ...product, id: uuid(), colors: tempColors },
+      {
+        ...product,
+        id: uuid(),
+        colors: tempColors,
+        category: selectedCategory,
+      },
       ...prev,
     ]);
     setProduct(defaultProductObj);
@@ -135,6 +142,10 @@ const App = () => {
       <Modal isOpen={isOpen} closeModal={closeModal} title="ADD A NEW CAR!">
         <form className="space-y-3" onSubmit={sumbitHandler}>
           {renderFormInputList}
+          <Select
+            selected={selectedCategory}
+            setSelected={setSelectedCategory}
+          />
           <div className="flex items-center my-4 space-x-1">
             {tempColors.map((color) => (
               <span
