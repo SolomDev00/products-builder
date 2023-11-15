@@ -1,4 +1,4 @@
-import { IProduct } from "../interfaces";
+import { IFormInputs, IProduct } from "../interfaces";
 
 export const productList: IProduct[] = [
   {
@@ -91,5 +91,32 @@ export const productList: IProduct[] = [
       name: "Volkswagen",
       imageURL: "https://img.icons8.com/?size=48&id=58787&format=png",
     },
+  },
+];
+
+export const formInputList: IFormInputs[] = [
+  {
+    id: "title",
+    type: "text",
+    name: "title",
+    label: "Product Title",
+  },
+  {
+    id: "description",
+    type: "text",
+    name: "description",
+    label: "Product Description",
+  },
+  {
+    id: "imageURL",
+    type: "text",
+    name: "imageURL",
+    label: "Product ImageURL",
+  },
+  {
+    id: "price",
+    name: "price",
+    type: "number",
+    label: "Product Price",
   },
 ];
