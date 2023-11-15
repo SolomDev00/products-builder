@@ -1,15 +1,13 @@
 import Modal from "./components/UI/Modal";
 import Input from "./components/UI/Input";
 import Button from "./components/UI/Button";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { formInputList, productList } from "./data";
 import ProductsCard from "./components/ProductsCard";
 import { IProduct } from "./interfaces";
 
 const App = () => {
-  /* -------- STATE -------- */
-  const [isOpen, setIsOpen] = useState(false);
-  const [product, setProduct] = useState<IProduct>({
+  const defaultProductObj = {
     title: "",
     description: "",
     imageURL: "",
@@ -19,10 +17,14 @@ const App = () => {
       name: "",
       imageURL: "",
     },
-  });
+  };
+  /* -------- STATE -------- */
+  const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState<IProduct>(defaultProductObj);
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
+
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setProduct({
@@ -31,12 +33,21 @@ const App = () => {
     });
   };
 
+  const sumbitHandler = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+  };
+
+  const onCancel = () => {
+    setProduct(defaultProductObj);
+    closeModal();
+  };
+
   /* -------- HANDLER -------- */
   const renderProductList = productList.map((product) => (
     <ProductsCard key={product.id} product={product} />
   ));
   const renderFormInputList = formInputList.map((input) => (
-    <div className="flex flex-col">
+    <div className="flex flex-col" key={input.id}>
       <label
         htmlFor={input.id}
         className="mb-[1px] text-sm font-medium text-gray-700"
@@ -65,7 +76,7 @@ const App = () => {
         {renderProductList}
       </div>
       <Modal isOpen={isOpen} closeModal={closeModal} title="ADD A NEW CAR!">
-        <form className="space-y-3">
+        <form className="space-y-3" onSubmit={sumbitHandler}>
           {renderFormInputList}
           <div className="flex items-center space-x-3">
             <Button className="bg-indigo-700 hover:bg-indigo-800">
