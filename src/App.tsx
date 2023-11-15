@@ -18,7 +18,7 @@ const App = () => {
     category: {
       name: "",
       imageURL: "",
-    }
+    },
   });
 
   const closeModal = () => setIsOpen(false);
@@ -47,7 +47,7 @@ const App = () => {
         type={input.type}
         id={input.id}
         name={input.name}
-        value={product[]}
+        value={product[input.name]}
         onChange={onChangeHandler}
       />
     </div>
