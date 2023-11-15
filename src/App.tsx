@@ -1,10 +1,12 @@
-import Modal from "./components/UI/Modal";
-import Input from "./components/UI/Input";
-import Button from "./components/UI/Button";
+import Modal from "./components/schema/Modal";
+import Input from "./components/schema/Input";
+import Button from "./components/schema/Button";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { formInputList, productList } from "./data";
 import ProductsCard from "./components/ProductsCard";
 import { IProduct } from "./interfaces";
+import { productValidation } from "./validation";
+import ErrorMessage from "./components/ErrorMessage";
 
 const App = () => {
   const defaultProductObj = {
@@ -20,6 +22,12 @@ const App = () => {
   };
   /* -------- STATE -------- */
   const [isOpen, setIsOpen] = useState(false);
+  const [errors, setErrors] = useState({
+    title: "",
+    description: "",
+    imageURL: "",
+    price: "",
+  });
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
 
   const closeModal = () => setIsOpen(false);
@@ -31,15 +39,32 @@ const App = () => {
       ...product,
       [name]: value,
     });
-  };
-
-  const sumbitHandler = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
+    setErrors({ ...errors, [name]: "" });
   };
 
   const onCancel = () => {
     setProduct(defaultProductObj);
     closeModal();
+  };
+
+  const sumbitHandler = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    const { title, description, imageURL, price } = product;
+
+    const errors = productValidation({
+      title,
+      description,
+      imageURL,
+      price,
+    });
+
+    const hasErrorMsg =
+      Object.values(errors).some((value) => value === "") &&
+      Object.values(errors).every((value) => value === "");
+    if (!hasErrorMsg) {
+      setErrors(errors);
+      return;
+    }
   };
 
   /* -------- HANDLER -------- */
@@ -61,6 +86,7 @@ const App = () => {
         value={product[input.name]}
         onChange={onChangeHandler}
       />
+      <ErrorMessage msg={errors[input.name]} />
     </div>
   ));
 
@@ -84,7 +110,7 @@ const App = () => {
             </Button>
             <Button
               className="bg-gray-600 hover:bg-gray-700"
-              onClick={() => closeModal()}
+              onClick={() => onCancel()}
             >
               Cancel
             </Button>

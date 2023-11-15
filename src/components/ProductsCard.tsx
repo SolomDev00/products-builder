@@ -1,5 +1,5 @@
 import Image from "./Image";
-import Button from "./UI/Button";
+import Button from "./schema/Button";
 import { IProduct } from "../interfaces";
 import { txtSlicer } from "../utils/functions";
 
@@ -25,6 +25,7 @@ const ProductsCard = ({ product }: IProps) => {
       <div className="flex items-center justify-between">
         <span className="text-base text-indigo-600">{price}$</span>
         <Image
+          title={category.name}
           imageURL={category.imageURL}
           alt={category.name}
           className="w-10 h-10 rounded-full object-center cursor-pointer"
