@@ -1,3 +1,5 @@
+import { TProductNameSchema } from "../types";
+
 export interface IProduct {
   id?: string | undefined;
   title: string;
@@ -14,7 +16,7 @@ export interface IProduct {
 export interface IFormInputs {
   id: string;
   type: string;
-  name: "title" | "description" | "imageURL" | "price";
+  name: TProductNameSchema;
   label: string;
 }
 

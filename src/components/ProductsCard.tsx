@@ -6,15 +6,23 @@ import { txtSlicer } from "../utils/functions";
 
 interface IProps {
   product: IProduct;
+  setProductToEdit: (product: IProduct) => void;
+  openEditModal: () => void;
 }
 
-const ProductsCard = ({ product }: IProps) => {
+const ProductsCard = ({ product, setProductToEdit, openEditModal }: IProps) => {
   const { title, description, imageURL, price, colors, category } = product;
 
-  /* -------- HANDLER -------- */
+  /* -------- RENDER -------- */
   const renderProductColors = colors.map((color) => (
     <CircleColor key={color} color={color} />
   ));
+
+  /* -------- HANDLER -------- */
+  const onEdit = () => {
+    setProductToEdit(product);
+    openEditModal();
+  };
 
   return (
     <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border rounded-md p-2 flex flex-col">
@@ -36,7 +44,9 @@ const ProductsCard = ({ product }: IProps) => {
         />
       </div>
       <div className="flex items-center justify-between space-x-2 mt-5">
-        <Button className="bg-indigo-700">Edit</Button>
+        <Button className="bg-indigo-700" onClick={() => onEdit()}>
+          Edit
+        </Button>
         <Button className="bg-red-700">Delete</Button>
       </div>
     </div>
