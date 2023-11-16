@@ -14,7 +14,7 @@ const Button = ({
 }: IProps) => {
   return (
     <button
-      className={`${className} ${cardWidth} p-2 rounded-md text-white`}
+      className={`${className} ${cardWidth} rounded-lg text-white px-3 py-3 duration-200 font-medium`}
       {...rest}
     >
       {children}
