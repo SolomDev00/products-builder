@@ -26,13 +26,14 @@ const App = () => {
   };
   /* -------- STATE -------- */
   const [selectedCategory, setSelectedCategory] = useState(categories[2]);
-  const [productToEdit, setProductToEdit] =
-    useState<IProduct>(defaultProductObj);
+  const [productToEditIdx, setProductToEditIdx] = useState<number>(0);
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
   const [products, setProducts] = useState<IProduct[]>(productList);
   const [tempColors, setTempColors] = useState<string[]>([]);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [productToEdit, setProductToEdit] =
+    useState<IProduct>(defaultProductObj);
   const [errors, setErrors] = useState({
     title: "",
     description: "",
@@ -127,18 +128,27 @@ const App = () => {
       return;
     }
 
+    const updatedProducts = [...products];
+    updatedProducts[productToEditIdx] = {
+      ...productToEdit,
+      colors: tempColors.concat(productToEdit.colors),
+    };
+    setProducts(updatedProducts);
+
     setProductToEdit(defaultProductObj);
     setTempColors([]);
-    closeModal();
+    closeEditModal();
   };
 
   /* -------- RENDER -------- */
-  const renderProductList = products.map((product) => (
+  const renderProductList = products.map((product, idx) => (
     <ProductsCard
+      idx={idx}
       key={product.id}
       product={product}
       openEditModal={openEditModal}
       setProductToEdit={setProductToEdit}
+      setProductToEditIdx={setProductToEditIdx}
     />
   ));
 
@@ -167,6 +177,10 @@ const App = () => {
       color={color}
       onClick={() => {
         if (tempColors.includes(color)) {
+          setTempColors((prev) => prev.filter((item) => item !== color));
+          return;
+        }
+        if (productToEdit.colors.includes(color)) {
           setTempColors((prev) => prev.filter((item) => item !== color));
           return;
         }
@@ -217,7 +231,7 @@ const App = () => {
       <div className="m-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-2 md:gap-4 p-2 rounded-md">
         {renderProductList}
       </div>
-      {/* ADD PRODUCT MODAL */}
+      {/* -------- ADD PRODUCT MODAL -------- */}
       <Modal isOpen={isOpen} closeModal={closeModal} title="Add a new Product!">
         <form className="space-y-3" onSubmit={sumbitHandler}>
           {renderFormInputList}
@@ -252,7 +266,7 @@ const App = () => {
           </div>
         </form>
       </Modal>
-      {/* EDIT PRODUCT MODAL */}
+      {/* -------- EDIT PRODUCT MODAL -------- */}
       <Modal
         isOpen={isOpenEdit}
         closeModal={closeEditModal}
@@ -271,12 +285,14 @@ const App = () => {
             "imageURL"
           )}
           {renderProductToEditWithErrorMsg("price", "Product Price", "price")}
-          {/* <Select
-            selected={selectedCategory}
-            setSelected={setSelectedCategory}
+          <Select
+            selected={productToEdit.category}
+            setSelected={(value) =>
+              setProductToEdit({ ...productToEdit, category: value })
+            }
           />
           <div className="flex items-center my-4 space-x-1">
-            {tempColors.map((color) => (
+            {tempColors.concat(productToEdit.colors).map((color) => (
               <span
                 key={color}
                 style={{ backgroundColor: color }}
@@ -288,7 +304,8 @@ const App = () => {
           </div>
           <div className="flex items-center my-4 space-x-1">
             {renderProductColors}
-          </div> */}
+          </div>
+
           <div className="flex items-center space-x-3">
             <Button className="bg-indigo-700 hover:bg-indigo-800">
               Submit

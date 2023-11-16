@@ -5,12 +5,20 @@ import { IProduct } from "../interfaces";
 import { txtSlicer } from "../utils/functions";
 
 interface IProps {
+  idx: number;
   product: IProduct;
-  setProductToEdit: (product: IProduct) => void;
   openEditModal: () => void;
+  setProductToEditIdx: (value: number) => void;
+  setProductToEdit: (product: IProduct) => void;
 }
 
-const ProductsCard = ({ product, setProductToEdit, openEditModal }: IProps) => {
+const ProductsCard = ({
+  idx,
+  product,
+  setProductToEdit,
+  openEditModal,
+  setProductToEditIdx,
+}: IProps) => {
   const { title, description, imageURL, price, colors, category } = product;
 
   /* -------- RENDER -------- */
@@ -22,6 +30,7 @@ const ProductsCard = ({ product, setProductToEdit, openEditModal }: IProps) => {
   const onEdit = () => {
     setProductToEdit(product);
     openEditModal();
+    setProductToEditIdx(idx);
   };
 
   return (
