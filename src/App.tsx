@@ -357,7 +357,7 @@ const App = () => {
             Yes, remove
           </Button>
           <Button
-            className="bg-[#f5f5fa] hover:bg-gray-300 text-black"
+            className="bg-gray-600 hover:bg-gray-700 text-black"
             onClick={closeConfirmModal}
           >
             Cancel
