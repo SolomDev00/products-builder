@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode, memo } from "react";
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -6,6 +6,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   cardWidth?: "w-full" | "w-fit";
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 const Button = ({
   children,
   className,
@@ -22,4 +23,5 @@ const Button = ({
   );
 };
 
-export default Button;
+// eslint-disable-next-line react-refresh/only-export-components
+export default memo(Button);
