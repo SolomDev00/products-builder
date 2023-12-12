@@ -10,7 +10,7 @@ import { productValidation } from "./validation";
 import CircleColor from "./components/CircleColor";
 import ErrorMessage from "./components/ErrorMessage";
 import ProductsCard from "./components/ProductsCard";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { categories, colors, formInputList, productList } from "./data";
 
 const App = () => {
@@ -47,10 +47,10 @@ const App = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const openEditModal = () => setIsOpenEdit(true);
+  const openEditModal = useCallback(() => setIsOpenEdit(true), []);
   const closeEditModal = () => setIsOpenEdit(false);
 
-  const openConfirmModal = () => setIsOpenConfirmModal(true);
+  const openConfirmModal = useCallback(() => setIsOpenConfirmModal(true), []);
   const closeConfirmModal = () => setIsOpenConfirmModal(false);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

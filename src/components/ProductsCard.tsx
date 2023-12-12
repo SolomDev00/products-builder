@@ -3,6 +3,7 @@ import Button from "./schema/Button";
 import CircleColor from "./CircleColor";
 import { IProduct } from "../interfaces";
 import { txtSlicer, numberWithCommas } from "../utils/functions";
+import { memo } from "react";
 
 interface IProps {
   idx: number;
@@ -13,6 +14,7 @@ interface IProps {
   setProductToEdit: (product: IProduct) => void;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 const ProductsCard = ({
   product,
   setProductToEdit,
@@ -77,4 +79,5 @@ const ProductsCard = ({
   );
 };
 
-export default ProductsCard;
+// eslint-disable-next-line react-refresh/only-export-components
+export default memo(ProductsCard);
